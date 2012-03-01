@@ -22,7 +22,7 @@ public class BlockPlaceListener implements Listener{
         boolean isTrusted = J2MC_Manager.getPermissions().hasFlag(event.getPlayer().getName(), 't');
         
         if(plugin.BlockedForNormals.contains(blockid)){
-            if(!isAdmin || !isTrusted){
+            if(!isAdmin && !isTrusted){
                 if(plugin.BlockedForTrusted.contains(blockid)){
                     event.getPlayer().sendMessage(ChatColor.RED + "You can't place that block");
                 }else{
@@ -37,7 +37,8 @@ public class BlockPlaceListener implements Listener{
                 event.getPlayer().sendMessage(ChatColor.RED + "Even trusted have their limits, you can't place that");
                 event.setCancelled(true);
                 return;
-            }else if(!isAdmin && !isTrusted){
+            }
+            if(!isAdmin && !isTrusted){
                 event.getPlayer().sendMessage(ChatColor.RED + "You can't place that block");
                 event.setCancelled(true);
                 return;

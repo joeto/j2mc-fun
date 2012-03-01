@@ -1,0 +1,25 @@
+name: J2MC_Fun
+main: to.joe.j2mc.fun.J2MC_Fun
+version: 0.0prealpha
+website: http://forums.joe.to
+author: J2 Minecraft Plugin Team
+description: Fun mdoule.
+commands:
+  item:
+    description: Spawn items
+    usage: /item iname/id:damage amount
+  i:
+    description: Spawn items
+    usage: /i iname/id:damage amount
+  give:
+    description: Spawn items
+    usage: /give iname/id:damage amount
+  ci:
+    description: clear inventory
+    usage: /ci
+  spawn:
+    description: go to spawn or drag a person to spawn
+    usage: /spawn [target]
+  gm:
+    description: change game modes
+    usage: /gm

@@ -45,7 +45,7 @@ public class ItemCommand extends MasterCommand{
                     if (idDamageSplit.length == 2) {
                         final String damageString = idDamageSplit[1];
                         byte value = this.toWoolValue(damageString);
-                        if (value != (Byte) null) {
+                        if (value != (byte) 100) {
                             itemDamage = value;
                         } else {
                             try {
@@ -132,7 +132,7 @@ public class ItemCommand extends MasterCommand{
         }else if(givenColorName.equalsIgnoreCase("black")){
             return (byte) 15;
         }
-        return (Byte) null;
+        return (byte) 100;
     }
     
 }

@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import to.joe.j2mc.fun.command.ClearInventoryCommand;
 import to.joe.j2mc.fun.command.GameModeToggleCommand;
+import to.joe.j2mc.fun.command.ItemCommand;
 import to.joe.j2mc.fun.command.SpawnCommand;
 
 public class J2MC_Fun extends JavaPlugin{
@@ -28,6 +29,9 @@ public class J2MC_Fun extends JavaPlugin{
         this.getCommand("spawn").setExecutor(new SpawnCommand(this));
         this.getCommand("gm").setExecutor(new GameModeToggleCommand(this));
         this.getCommand("ci").setExecutor(new ClearInventoryCommand(this));
+        this.getCommand("item").setExecutor(new ItemCommand(this));
+        this.getCommand("i").setExecutor(new ItemCommand(this));
+        this.getCommand("give").setExecutor(new ItemCommand(this));
         
         this.getServer().getPluginManager().registerEvents(new BlockPlaceListener(this), this);
         this.getLogger().info("Fun module enabled!");
