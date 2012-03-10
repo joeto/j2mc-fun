@@ -23,3 +23,6 @@ commands:
   gm:
     description: change game modes
     usage: /gm
+permissions:
+  j2mc.fun:
+    description: Gives access to fun commands.
