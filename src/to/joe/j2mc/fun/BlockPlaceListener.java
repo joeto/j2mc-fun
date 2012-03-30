@@ -18,7 +18,7 @@ public class BlockPlaceListener implements Listener{
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event){
         int blockid = event.getBlock().getTypeId();
-        boolean isAdmin = J2MC_Manager.getPermissions().isAdmin(event.getPlayer().getName());
+        boolean isAdmin = J2MC_Manager.getPermissions().hasFlag(event.getPlayer().getName(), 'a');
         boolean isTrusted = J2MC_Manager.getPermissions().hasFlag(event.getPlayer().getName(), 't');
         
         if(plugin.BlockedForNormals.contains(blockid)){

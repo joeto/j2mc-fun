@@ -18,7 +18,7 @@ public class SpawnCommand extends MasterCommand{
     @Override
     public void exec(CommandSender sender, String commandName, String[] args, Player player, boolean isPlayer) {
         if (!isPlayer || player.hasPermission("j2mc.fun")) {
-            if (isPlayer && (!J2MC_Manager.getPermissions().isAdmin(player.getName()) || (args.length < 1))) {
+            if (isPlayer && (!J2MC_Manager.getPermissions().hasFlag(player.getName(), 'a') || (args.length < 1))) {
                 player.sendMessage(ChatColor.RED + "WHEEEEEEEEEEEEEEE");
                 player.teleport(player.getWorld().getSpawnLocation());
             } else if (args.length == 1) {

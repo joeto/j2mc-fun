@@ -28,7 +28,7 @@ public class GameModeToggleCommand extends MasterCommand{
                 }
                 plugin.getLogger().info(player.getName() + " changed game mode to " + player.getGameMode().toString());
             }else{
-                if(J2MC_Manager.getPermissions().isAdmin(player.getName())){
+                if(J2MC_Manager.getPermissions().hasFlag(player.getName(), 'a')){
                     if(player.getGameMode().equals(GameMode.SURVIVAL)){
                         player.setGameMode(GameMode.CREATIVE);
                     } else{

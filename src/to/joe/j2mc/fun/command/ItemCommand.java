@@ -26,7 +26,7 @@ public class ItemCommand extends MasterCommand{
     @Override
     public void exec(CommandSender sender, String commandName, String[] args, Player player, boolean isPlayer) {
         if(isPlayer && player.hasPermission("j2mc.fun")){
-            boolean isAdmin = J2MC_Manager.getPermissions().isAdmin(player.getName());
+            boolean isAdmin = J2MC_Manager.getPermissions().hasFlag(player.getName(), 'a');
                 if (args.length == 0) {
                     player.sendMessage(ChatColor.RED + "Correct usage is: /i [item](:damage) (amount)");
                     return;

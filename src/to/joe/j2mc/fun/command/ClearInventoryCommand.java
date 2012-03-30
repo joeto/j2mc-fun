@@ -26,7 +26,7 @@ public class ClearInventoryCommand extends MasterCommand{
                 target = player;
                 player.sendMessage(ChatColor.RED + "Inventory emptied");
                 plugin.getLogger().info(ChatColor.RED + player.getName() + " emptied inventory");
-            } else if ((args.length == 1) && (!isPlayer || J2MC_Manager.getPermissions().isAdmin(player.getName()))) {
+            } else if ((args.length == 1) && (!isPlayer || J2MC_Manager.getPermissions().hasFlag(player.getName(), 'a'))) {
                 try{
                     target = J2MC_Manager.getVisibility().getPlayer(args[0], sender);
                 }catch(BadPlayerMatchException e){
