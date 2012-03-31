@@ -25,8 +25,8 @@ public class ItemCommand extends MasterCommand {
 
     @Override
     public void exec(CommandSender sender, String commandName, String[] args, Player player, boolean isPlayer) {
-        if (isPlayer && player.hasPermission("j2mc.fun")) {
-            final boolean isAdmin = J2MC_Manager.getPermissions().hasFlag(player.getName(), 'a');
+        if (isPlayer) {
+            final boolean isAdmin = sender.hasPermission("j2mc.fun.admin");
             if (args.length == 0) {
                 player.sendMessage(ChatColor.RED + "Correct usage is: /i [item](:damage) (amount)");
                 return;
@@ -78,7 +78,7 @@ public class ItemCommand extends MasterCommand {
                 player.sendMessage(ChatColor.RED + "Unknown item");
                 return;
             }
-            if (!isAdmin && this.plugin.SummonBlackList.contains(itemMaterial.getId())) {
+            if (!isAdmin && this.plugin.summonBlackList.contains(itemMaterial.getId())) {
                 player.sendMessage(ChatColor.RED + "Can't give that to you right now");
                 return;
             }
@@ -89,7 +89,7 @@ public class ItemCommand extends MasterCommand {
             }
             player.sendMessage("Given " + targetPlayer.getDisplayName() + " " + itemCount + " " + itemMaterial.toString());
             this.plugin.getLogger().info("Giving " + player.getName() + " " + itemCount + " " + itemMaterial.toString());
-            if ((this.plugin.SummonWatchList.contains(itemMaterial.getId()) && ((itemCount > 10) || (itemCount < 1)) && !isAdmin) && !J2MC_Manager.getPermissions().hasFlag(player.getName(), 'y')) {
+            if ((this.plugin.summonWatchList.contains(itemMaterial.getId()) && ((itemCount > 10) || (itemCount < 1)) && !isAdmin) && !player.hasPermission("j2mc.fun.trusted")) {
                 final HashSet<String> targets = new HashSet<String>();
                 targets.add("ADMININFO");
                 this.plugin.getServer().getPluginManager().callEvent(new MessageEvent(targets, "Detecting summon of " + itemCount + " " + itemMaterial.toString() + " by " + player.getName()));
@@ -132,7 +132,7 @@ public class ItemCommand extends MasterCommand {
         } else if (givenColorName.equalsIgnoreCase("black")) {
             return (byte) 15;
         }
-        return (byte) 100;
+        return (byte) 0;
     }
 
 }

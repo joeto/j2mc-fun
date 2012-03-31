@@ -9,13 +9,20 @@ commands:
     description: Spawn items
     usage: /item iname/id:damage amount
     aliases: ['i','give']
-    permission: j2mc.fun
+    permission: j2mc.fun.commands
     permission-message: You may not
   ci:
     description: clear inventory
     usage: /ci
-    permission: j2mc.fun
+    permission: j2mc.fun.commands
     permission-message: You may not
 permissions:
-  j2mc.fun:
+  j2mc.fun.commands:
     description: Gives access to fun commands.
+  j2mc.fun.trusted:
+    description: Trusted access
+  j2mc.fun.admin:
+    description: Admin access
+    children:
+      j2mc.fun.trusted: true
+      j2mc.fun.commands: true
