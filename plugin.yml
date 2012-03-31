@@ -1,28 +1,21 @@
 name: J2MC_Fun
 main: to.joe.j2mc.fun.J2MC_Fun
-version: 0.0prealpha
+version: 1.0
 website: http://forums.joe.to
 author: J2 Minecraft Plugin Team
-description: Fun mdoule.
+description: Fun module.
 commands:
   item:
     description: Spawn items
     usage: /item iname/id:damage amount
-  i:
-    description: Spawn items
-    usage: /i iname/id:damage amount
-  give:
-    description: Spawn items
-    usage: /give iname/id:damage amount
+    aliases: ['i','give']
+    permission: j2mc.fun
+    permission-message: You may not
   ci:
     description: clear inventory
     usage: /ci
-  spawn:
-    description: go to spawn or drag a person to spawn
-    usage: /spawn [target]
-  gm:
-    description: change game modes
-    usage: /gm
+    permission: j2mc.fun
+    permission-message: You may not
 permissions:
   j2mc.fun:
     description: Gives access to fun commands.
