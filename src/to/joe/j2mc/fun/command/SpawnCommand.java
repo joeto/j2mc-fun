@@ -9,12 +9,12 @@ import to.joe.j2mc.core.command.MasterCommand;
 import to.joe.j2mc.core.exceptions.BadPlayerMatchException;
 import to.joe.j2mc.fun.J2MC_Fun;
 
-public class SpawnCommand extends MasterCommand{
+public class SpawnCommand extends MasterCommand {
 
-    public SpawnCommand(J2MC_Fun fun){
+    public SpawnCommand(J2MC_Fun fun) {
         super(fun);
     }
-    
+
     @Override
     public void exec(CommandSender sender, String commandName, String[] args, Player player, boolean isPlayer) {
         if (!isPlayer || player.hasPermission("j2mc.fun")) {
@@ -23,20 +23,20 @@ public class SpawnCommand extends MasterCommand{
                 player.teleport(player.getWorld().getSpawnLocation());
             } else if (args.length == 1) {
                 Player target;
-                try{
+                try {
                     target = J2MC_Manager.getVisibility().getPlayer(args[0], sender);
-                }catch(BadPlayerMatchException e){
+                } catch (final BadPlayerMatchException e) {
                     player.sendMessage(ChatColor.RED + e.getMessage());
                     return;
                 }
                 target.teleport(target.getWorld().getSpawnLocation());
                 target.sendMessage(ChatColor.RED + "OH GOD I'M BEING PULLED TO SPAWN OH GOD");
                 J2MC_Manager.getCore().adminAndLog(ChatColor.RED + player.getName() + " pulled " + target.getName() + " to spawn");
-                } else {
-                    sender.sendMessage(ChatColor.RED + "No such player, or matches multiple");
-                }
             } else {
-                sender.sendMessage(ChatColor.RED + "Usage: /spawn playername");
+                sender.sendMessage(ChatColor.RED + "No such player, or matches multiple");
             }
+        } else {
+            sender.sendMessage(ChatColor.RED + "Usage: /spawn playername");
+        }
     }
 }

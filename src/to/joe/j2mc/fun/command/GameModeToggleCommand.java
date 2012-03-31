@@ -8,33 +8,33 @@ import to.joe.j2mc.core.J2MC_Manager;
 import to.joe.j2mc.core.command.MasterCommand;
 import to.joe.j2mc.fun.J2MC_Fun;
 
-public class GameModeToggleCommand extends MasterCommand{
+public class GameModeToggleCommand extends MasterCommand {
 
     J2MC_Fun plugin;
-    
-    public GameModeToggleCommand(J2MC_Fun fun){
+
+    public GameModeToggleCommand(J2MC_Fun fun) {
         super(fun);
         this.plugin = fun;
     }
-    
+
     @Override
     public void exec(CommandSender sender, String commandName, String[] args, Player player, boolean isPlayer) {
-        if(isPlayer){
-            if(plugin.AnyoneCanChangeGameMode){
-                if(player.getGameMode().equals(GameMode.SURVIVAL)){
+        if (isPlayer) {
+            if (this.plugin.AnyoneCanChangeGameMode) {
+                if (player.getGameMode().equals(GameMode.SURVIVAL)) {
                     player.setGameMode(GameMode.CREATIVE);
-                } else{
+                } else {
                     player.setGameMode(GameMode.SURVIVAL);
                 }
-                plugin.getLogger().info(player.getName() + " changed game mode to " + player.getGameMode().toString());
-            }else{
-                if(J2MC_Manager.getPermissions().hasFlag(player.getName(), 'a')){
-                    if(player.getGameMode().equals(GameMode.SURVIVAL)){
+                this.plugin.getLogger().info(player.getName() + " changed game mode to " + player.getGameMode().toString());
+            } else {
+                if (J2MC_Manager.getPermissions().hasFlag(player.getName(), 'a')) {
+                    if (player.getGameMode().equals(GameMode.SURVIVAL)) {
                         player.setGameMode(GameMode.CREATIVE);
-                    } else{
+                    } else {
                         player.setGameMode(GameMode.SURVIVAL);
                     }
-                    plugin.getLogger().info(player.getName() + " changed game mode to " + player.getGameMode().toString());
+                    this.plugin.getLogger().info(player.getName() + " changed game mode to " + player.getGameMode().toString());
                 }
             }
         }

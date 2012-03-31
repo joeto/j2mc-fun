@@ -10,9 +10,10 @@ import to.joe.j2mc.core.command.MasterCommand;
 import to.joe.j2mc.core.exceptions.BadPlayerMatchException;
 import to.joe.j2mc.fun.J2MC_Fun;
 
-public class ClearInventoryCommand extends MasterCommand{
+public class ClearInventoryCommand extends MasterCommand {
 
     J2MC_Fun plugin;
+
     public ClearInventoryCommand(J2MC_Fun plugin) {
         super(plugin);
         this.plugin = plugin;
@@ -20,16 +21,16 @@ public class ClearInventoryCommand extends MasterCommand{
 
     @Override
     public void exec(CommandSender sender, String commandName, String[] args, Player player, boolean isPlayer) {
-        if(player.hasPermission("j2mc.fun")){
+        if (player.hasPermission("j2mc.fun")) {
             Player target = null;
             if (isPlayer && (args.length == 0)) {
                 target = player;
                 player.sendMessage(ChatColor.RED + "Inventory emptied");
-                plugin.getLogger().info(ChatColor.RED + player.getName() + " emptied inventory");
+                this.plugin.getLogger().info(ChatColor.RED + player.getName() + " emptied inventory");
             } else if ((args.length == 1) && (!isPlayer || J2MC_Manager.getPermissions().hasFlag(player.getName(), 'a'))) {
-                try{
+                try {
                     target = J2MC_Manager.getVisibility().getPlayer(args[0], sender);
-                }catch(BadPlayerMatchException e){
+                } catch (final BadPlayerMatchException e) {
                     player.sendMessage(ChatColor.RED + e.getMessage());
                 }
             }
@@ -43,5 +44,5 @@ public class ClearInventoryCommand extends MasterCommand{
             }
         }
     }
-    
+
 }
