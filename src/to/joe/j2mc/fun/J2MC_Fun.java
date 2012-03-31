@@ -3,6 +3,7 @@ package to.joe.j2mc.fun;
 import java.util.List;
 
 import org.bukkit.GameMode;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -44,16 +45,17 @@ public class J2MC_Fun extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        if (event.getPlayer().hasPermission("j2mc.fun.trusted")) {
-            if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
-                event.getPlayer().setGameMode(GameMode.CREATIVE);
+        final Player player = event.getPlayer();
+        if (player.hasPermission("j2mc.fun.trusted")) {
+            if (player.getGameMode() != GameMode.CREATIVE) {
+                player.setGameMode(GameMode.CREATIVE);
             }
         } else {
-            if (event.getPlayer().getGameMode() == GameMode.CREATIVE) {
-                event.getPlayer().setGameMode(GameMode.SURVIVAL);
+            if (player.getGameMode() == GameMode.CREATIVE) {
+                player.setGameMode(GameMode.SURVIVAL);
             }
-            if (!event.getPlayer().getAllowFlight()) {
-                event.getPlayer().setAllowFlight(true);
+            if (!player.getAllowFlight()) {
+                player.setAllowFlight(true);
             }
         }
     }
