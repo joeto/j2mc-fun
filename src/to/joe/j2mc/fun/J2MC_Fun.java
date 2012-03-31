@@ -26,6 +26,7 @@ public class J2MC_Fun extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         this.getConfig().options().copyDefaults(true);
+        this.saveConfig();
         this.blockedForTrusted = this.getConfig().getIntegerList("blockfortrusted");
         this.blockedForNormals = this.getConfig().getIntegerList("blockfornormals");
         this.summonBlackList = this.getConfig().getIntegerList("summonblacklist");
