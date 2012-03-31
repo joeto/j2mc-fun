@@ -2,18 +2,18 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>to.joe</groupId>
-  <artifactId>j2mc-seniorfun</artifactId>
+  <artifactId>j2mc-fun</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>j2mc-seniorfun</name>
-  <url>http://www.github.com/joeto/j2mc-seniorfun</url>
+  <name>j2mc-fun</name>
+  <url>http://www.github.com/joeto/j2mc-fun</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <scm>
-    <connection>scm:git:git://github.com/joeto/j2mc-seniorfun/j2mc-seniorfun.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/joeto/j2mc-seniorfun/j2mc-seniorfun.git</developerConnection>
-    <url>s://www.github.com/joeto/j2mc-seniorfun</url>
+    <connection>scm:git:git://github.com/joeto/j2mc-fun/j2mc-fun.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/joeto/j2mc-fun/j2mc-fun.git</developerConnection>
+    <url>s://www.github.com/joeto/j2mc-fun</url>
   </scm>
   <repositories>
     <repository>
@@ -64,7 +64,7 @@
           <archive>
             <manifestEntries>
               <Main-Class>Main</Main-Class>
-              <Implementation-Title>j2mc-seniorfun</Implementation-Title>
+              <Implementation-Title>j2mc-fun</Implementation-Title>
               <Implementation-Version>${describe}</Implementation-Version>
               <Implementation-Vendor>j2</Implementation-Vendor>
             </manifestEntries>
