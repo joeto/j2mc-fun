@@ -35,7 +35,9 @@ public class J2MC_Fun extends JavaPlugin implements Listener {
         if (this.getConfig().getBoolean("OMGFREEFLIGHT")) {
             this.getServer().getPluginManager().registerEvents(this, this);
         }
-
+        for (final Player player : this.getServer().getOnlinePlayers()) {
+            this.setFlight(player);
+        }
         this.getCommand("ci").setExecutor(new ClearInventoryCommand(this));
         this.getCommand("item").setExecutor(new ItemCommand(this));
 
@@ -45,7 +47,10 @@ public class J2MC_Fun extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        final Player player = event.getPlayer();
+        this.setFlight(event.getPlayer());
+    }
+
+    public void setFlight(Player player) {
         if (player.hasPermission("j2mc.fun.trusted")) {
             if (player.getGameMode() != GameMode.CREATIVE) {
                 player.setGameMode(GameMode.CREATIVE);
