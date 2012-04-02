@@ -12,6 +12,7 @@ commands:
     permission: j2mc.fun.commands
     permission-message: You may not
   ci:
+    aliases: ['clearinventory']
     description: clear inventory
     usage: /ci
     permission: j2mc.fun.commands
