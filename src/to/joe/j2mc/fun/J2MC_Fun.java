@@ -34,14 +34,14 @@ public class J2MC_Fun extends JavaPlugin implements Listener {
         this.summonWatchList = this.getConfig().getIntegerList("summonwatchlist");
         if (this.getConfig().getBoolean("OMGFREEFLIGHT")) {
             this.getServer().getPluginManager().registerEvents(this, this);
-        }
-        for (final Player player : this.getServer().getOnlinePlayers()) {
-            this.setFlight(player);
+            for (final Player player : this.getServer().getOnlinePlayers()) {
+                this.setFlight(player);
+            }
         }
         this.getCommand("ci").setExecutor(new ClearInventoryCommand(this));
         this.getCommand("item").setExecutor(new ItemCommand(this));
 
-        this.getServer().getPluginManager().registerEvents(new BlockPlaceListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new EventListener(this), this);
         this.getLogger().info("Fun module enabled!");
     }
 
@@ -59,9 +59,7 @@ public class J2MC_Fun extends JavaPlugin implements Listener {
             if (player.getGameMode() == GameMode.CREATIVE) {
                 player.setGameMode(GameMode.SURVIVAL);
             }
-            if (!player.getAllowFlight()) {
-                player.setAllowFlight(true);
-            }
+            player.setAllowFlight(true);
         }
     }
 

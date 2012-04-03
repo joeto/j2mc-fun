@@ -7,11 +7,11 @@ import org.bukkit.event.block.BlockPlaceEvent;
 
 import to.joe.j2mc.core.J2MC_Manager;
 
-public class BlockPlaceListener implements Listener {
+public class EventListener implements Listener {
 
     J2MC_Fun plugin;
 
-    public BlockPlaceListener(J2MC_Fun fun) {
+    public EventListener(J2MC_Fun fun) {
         this.plugin = fun;
     }
 
