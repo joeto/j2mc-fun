@@ -1,7 +1,5 @@
 package to.joe.j2mc.fun.command;
 
-import java.util.HashSet;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -34,35 +32,34 @@ public class ItemCommand extends MasterCommand {
             final Player targetPlayer = player;
             Material itemMaterial = null;
             int itemCount = 1;
-            String[] idDamageSplit = null;
-            Byte itemDamage = null;
-            if (args.length > 0) {
-                idDamageSplit = args[0].split(":");
-                if (idDamageSplit[0].equals("0")) {
-                    idDamageSplit[0] = "1";
-                }
-                itemMaterial = Material.matchMaterial(idDamageSplit[0]);
-                if (idDamageSplit.length == 2) {
-                    final String damageString = idDamageSplit[1];
-                    final byte value = this.toWoolValue(damageString);
-                    if (value != (byte) 100) {
-                        itemDamage = value;
-                    } else {
-                        try {
-                            itemDamage = Byte.valueOf(damageString);
-                        } catch (final NumberFormatException e) {
-                            player.sendMessage("No such damage value. Giving you damage=0");
-                        }
+            short itemDamage = 0;
+            final String[] idDamageSplit = args[0].split(":");
+            if (idDamageSplit[0].equals("0")) {
+                idDamageSplit[0] = "1";
+            }
+            itemMaterial = Material.matchMaterial(idDamageSplit[0]);
+            if (idDamageSplit.length == 2) {
+                final String damageString = idDamageSplit[1];
+                final short value = this.toWoolValue(damageString);
+                if (value != 0) {
+                    itemDamage = value;
+                } else {
+                    try {
+                        itemDamage = Short.valueOf(damageString);
+                    } catch (final NumberFormatException e) {
+                        //Nope
                     }
                 }
+            }
+            if ((itemDamage < 0) || (itemDamage > 15)) {
+                itemDamage = 0;
             }
             if (args.length > 1) {
                 final String countString = args[1];
                 try {
                     itemCount = Integer.parseInt(countString);
                 } catch (final NumberFormatException ex) {
-                    player.sendMessage(ChatColor.RED + countString + " is not a number");
-                    return;
+                    //nope
                 }
             }
             if ((args.length == 3) && isAdmin) {
@@ -82,57 +79,51 @@ public class ItemCommand extends MasterCommand {
                 player.sendMessage(ChatColor.RED + "Can't give that to you right now");
                 return;
             }
-            if (itemDamage != null) {
-                targetPlayer.getInventory().addItem(new ItemStack(itemMaterial, itemCount, (short) 0, itemDamage));
-            } else {
-                targetPlayer.getInventory().addItem(new ItemStack(itemMaterial, itemCount));
-            }
+            targetPlayer.getInventory().addItem(new ItemStack(itemMaterial, itemCount, itemDamage));
             player.sendMessage("Given " + targetPlayer.getDisplayName() + " " + itemCount + " " + itemMaterial.toString());
             this.plugin.getLogger().info("Giving " + player.getName() + " " + itemCount + " " + itemMaterial.toString());
             if ((this.plugin.summonWatchList.contains(itemMaterial.getId()) && ((itemCount > 10) || (itemCount < 1)) && !isAdmin) && !player.hasPermission("j2mc.fun.trusted")) {
-                final HashSet<String> targets = new HashSet<String>();
-                targets.add("ADMININFO");
-                this.plugin.getServer().getPluginManager().callEvent(new MessageEvent(targets, "Detecting summon of " + itemCount + " " + itemMaterial.toString() + " by " + player.getName()));
+                this.plugin.getServer().getPluginManager().callEvent(new MessageEvent(MessageEvent.compile("ADMININFO"), "Detecting summon of " + itemCount + " " + itemMaterial.toString() + " by " + player.getName()));
                 J2MC_Manager.getCore().adminAndLog(ChatColor.LIGHT_PURPLE + "Detecting summon of " + ChatColor.WHITE + itemCount + " " + ChatColor.LIGHT_PURPLE + itemMaterial.toString() + " by " + ChatColor.WHITE + player.getName());
             }
         }
     }
 
-    public byte toWoolValue(String givenColorName) {
+    public short toWoolValue(String givenColorName) {
         if (givenColorName.equalsIgnoreCase("white")) {
-            return (byte) 0;
+            return 0;
         } else if (givenColorName.equalsIgnoreCase("orange")) {
-            return (byte) 1;
+            return 1;
         } else if (givenColorName.equalsIgnoreCase("magenta")) {
-            return (byte) 2;
+            return 2;
         } else if (givenColorName.equalsIgnoreCase("lightblue")) {
-            return (byte) 3;
+            return 3;
         } else if (givenColorName.equalsIgnoreCase("yellow")) {
-            return (byte) 4;
+            return 4;
         } else if (givenColorName.equalsIgnoreCase("lightgreen")) {
-            return (byte) 5;
+            return 5;
         } else if (givenColorName.equalsIgnoreCase("pink")) {
-            return (byte) 6;
+            return 6;
         } else if (givenColorName.equalsIgnoreCase("gray")) {
-            return (byte) 7;
+            return 7;
         } else if (givenColorName.equalsIgnoreCase("lightgray")) {
-            return (byte) 8;
+            return 8;
         } else if (givenColorName.equalsIgnoreCase("cyan")) {
-            return (byte) 9;
+            return 9;
         } else if (givenColorName.equalsIgnoreCase("purple")) {
-            return (byte) 10;
+            return 10;
         } else if (givenColorName.equalsIgnoreCase("blue")) {
-            return (byte) 11;
+            return 11;
         } else if (givenColorName.equalsIgnoreCase("brown")) {
-            return (byte) 12;
+            return 12;
         } else if (givenColorName.equalsIgnoreCase("darkgreen")) {
-            return (byte) 13;
+            return 13;
         } else if (givenColorName.equalsIgnoreCase("red")) {
-            return (byte) 14;
+            return 14;
         } else if (givenColorName.equalsIgnoreCase("black")) {
-            return (byte) 15;
+            return 15;
         }
-        return (byte) 0;
+        return 0;
     }
 
 }
