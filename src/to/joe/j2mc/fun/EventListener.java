@@ -1,11 +1,12 @@
 package to.joe.j2mc.fun;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
-
-import to.joe.j2mc.core.J2MC_Manager;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 public class EventListener implements Listener {
 
@@ -17,33 +18,46 @@ public class EventListener implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-        final int blockid = event.getBlock().getTypeId();
-        final boolean isAdmin = J2MC_Manager.getPermissions().hasFlag(event.getPlayer().getName(), 'a');
-        final boolean isTrusted = J2MC_Manager.getPermissions().hasFlag(event.getPlayer().getName(), 't');
+        final String check = this.check(event.getPlayer(), event.getBlock().getTypeId());
+        if (check != null) {
+            event.getPlayer().sendMessage(ChatColor.RED + check);
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onItemUse(PlayerInteractEvent event) {
+        if ((event.getAction() == Action.RIGHT_CLICK_AIR) || (event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+            final String check = this.check(event.getPlayer(), event.getPlayer().getItemInHand().getTypeId());
+            if (check != null) {
+                event.getPlayer().sendMessage(ChatColor.RED + check);
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    private String check(Player player, int blockid) {
+        final boolean isAdmin = player.hasPermission("j2mc.fun.admin");
+        final boolean isTrusted = player.hasPermission("j2mc.fun.trusted");
 
         if (this.plugin.blockedForNormals.contains(blockid)) {
             if (!isAdmin && !isTrusted) {
                 if (this.plugin.blockedForTrusted.contains(blockid)) {
-                    event.getPlayer().sendMessage(ChatColor.RED + "You can't place that block");
+                    return "You can't use that item";
                 } else {
-                    event.getPlayer().sendMessage(ChatColor.RED + "You need to be trusted to place that");
+                    return "You need to be trusted to use that item";
                 }
-                event.setCancelled(true);
-                return;
             }
         }
         if (this.plugin.blockedForTrusted.contains(blockid)) {
             if (isTrusted && !isAdmin) {
-                event.getPlayer().sendMessage(ChatColor.RED + "Even trusted have their limits, you can't place that");
-                event.setCancelled(true);
-                return;
+                return "Even trusted have their limits, you can't use that item";
             }
             if (!isAdmin && !isTrusted) {
-                event.getPlayer().sendMessage(ChatColor.RED + "You can't place that block");
-                event.setCancelled(true);
-                return;
+                return "You can't use that item";
             }
         }
+        return null;
     }
 
 }
