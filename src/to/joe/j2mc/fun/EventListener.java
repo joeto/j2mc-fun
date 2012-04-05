@@ -1,12 +1,14 @@
 package to.joe.j2mc.fun;
 
 import org.bukkit.ChatColor;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Dispenser;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class EventListener implements Listener {
@@ -36,11 +38,16 @@ public class EventListener implements Listener {
             }
         }
     }
-    
+
     @EventHandler
-    public void onEggThrow(PlayerEggThrowEvent event) {
-        if(!event.getPlayer().hasPermission("j2mc.fun.admin")){
-            event.setHatching(false);
+    public void onDispense(BlockDispenseEvent event) {
+        if (event.getItem().getTypeId() == 383) {
+            final BlockState state = event.getBlock().getState();
+            if (state instanceof Dispenser) {
+                final Dispenser dispenser = (Dispenser) state;
+                dispenser.getInventory().remove(383);
+            }
+            event.setCancelled(true);
         }
     }
 
