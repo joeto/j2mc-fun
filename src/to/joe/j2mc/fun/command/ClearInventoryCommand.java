@@ -28,11 +28,11 @@ public class ClearInventoryCommand extends MasterCommand {
             this.plugin.getLogger().info(ChatColor.RED + player.getName() + " emptied inventory");
         } else if ((args.length == 1) && (!isPlayer || J2MC_Manager.getPermissions().hasFlag(player.getName(), 'a'))) {
             try {
-				target = J2MC_Manager.getVisibility().getPlayer(args[0], null);
-			} catch (final BadPlayerMatchException e) {
-				sender.sendMessage(ChatColor.RED + e.getMessage());
-	            return;
-			}
+                target = J2MC_Manager.getVisibility().getPlayer(args[0], null);
+            } catch (final BadPlayerMatchException e) {
+                sender.sendMessage(ChatColor.RED + e.getMessage());
+                return;
+            }
             this.plugin.getLogger().info(ChatColor.RED + player.getName() + " emptied inventory of " + target.getName());
         }
         if (target != null) {
