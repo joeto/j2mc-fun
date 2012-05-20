@@ -7,6 +7,7 @@ import org.bukkit.inventory.PlayerInventory;
 
 import to.joe.j2mc.core.J2MC_Manager;
 import to.joe.j2mc.core.command.MasterCommand;
+import to.joe.j2mc.core.exceptions.BadPlayerMatchException;
 import to.joe.j2mc.fun.J2MC_Fun;
 
 public class ClearInventoryCommand extends MasterCommand {
@@ -26,10 +27,13 @@ public class ClearInventoryCommand extends MasterCommand {
             player.sendMessage(ChatColor.RED + "Inventory emptied");
             this.plugin.getLogger().info(ChatColor.RED + player.getName() + " emptied inventory");
         } else if ((args.length == 1) && (!isPlayer || J2MC_Manager.getPermissions().hasFlag(player.getName(), 'a'))) {
-            target = this.plugin.getServer().getPlayer(args[0]);
-            if (target != null) {
-                this.plugin.getLogger().info(ChatColor.RED + player.getName() + " emptied inventory of " + target.getName());
-            }
+            try {
+				target = J2MC_Manager.getVisibility().getPlayer(args[0], null);
+			} catch (final BadPlayerMatchException e) {
+				sender.sendMessage(ChatColor.RED + e.getMessage());
+	            return;
+			}
+            this.plugin.getLogger().info(ChatColor.RED + player.getName() + " emptied inventory of " + target.getName());
         }
         if (target != null) {
             final PlayerInventory targetInventory = target.getInventory();
