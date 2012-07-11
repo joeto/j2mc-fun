@@ -6,6 +6,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.sk89q.worldedit.blocks.ItemType;
+
 import to.joe.j2mc.core.J2MC_Manager;
 import to.joe.j2mc.core.command.MasterCommand;
 import to.joe.j2mc.core.event.MessageEvent;
@@ -37,7 +39,12 @@ public class ItemCommand extends MasterCommand {
             if (idDamageSplit[0].equals("0")) {
                 idDamageSplit[0] = "1";
             }
-            itemMaterial = Material.matchMaterial(idDamageSplit[0]);
+            ItemType type = ItemType.lookup(idDamageSplit[0]);
+            if (type == null) {
+                player.sendMessage(ChatColor.RED + "Unknown item: '" + args[0] + "'");
+                return;
+            }
+            itemMaterial = Material.getMaterial(type.getID());
             if (idDamageSplit.length == 2) {
                 final String damageString = idDamageSplit[1];
                 final short value = this.toWoolValue(damageString);
@@ -47,7 +54,8 @@ public class ItemCommand extends MasterCommand {
                     try {
                         itemDamage = Short.valueOf(damageString);
                     } catch (final NumberFormatException e) {
-                        //Nope
+                        player.sendMessage(ChatColor.RED + "Invalid number for damage: '" + damageString + "'");
+                        return;
                     }
                 }
             }
@@ -59,7 +67,8 @@ public class ItemCommand extends MasterCommand {
                 try {
                     itemCount = Integer.parseInt(countString);
                 } catch (final NumberFormatException ex) {
-                    //nope
+                    player.sendMessage(ChatColor.RED + "Invalid number for amount: '" + countString + "'");
+                    return;
                 }
             }
             if ((args.length == 3) && isAdmin) {
@@ -71,16 +80,12 @@ public class ItemCommand extends MasterCommand {
                     return;
                 }
             }
-            if (itemMaterial == null) {
-                player.sendMessage(ChatColor.RED + "Unknown item");
-                return;
-            }
             if (!isAdmin && this.plugin.summonBlackList.contains(itemMaterial.getId())) {
                 player.sendMessage(ChatColor.RED + "Can't give that to you right now");
                 return;
             }
             targetPlayer.getInventory().addItem(new ItemStack(itemMaterial, itemCount, itemDamage));
-            player.sendMessage("Given " + targetPlayer.getDisplayName() + " " + itemCount + " " + itemMaterial.toString());
+            player.sendMessage(ChatColor.YELLOW + "You've been given " + ChatColor.AQUA + itemCount + " " + ChatColor.GOLD + ChatColor.BOLD + type.getName());
             this.plugin.getLogger().info("Giving " + player.getName() + " " + itemCount + " " + itemMaterial.toString());
             if ((this.plugin.summonWatchList.contains(itemMaterial.getId()) && ((itemCount > 10) || (itemCount < 1)) && !isAdmin) && !player.hasPermission("j2mc.fun.trusted")) {
                 this.plugin.getServer().getPluginManager().callEvent(new MessageEvent(MessageEvent.compile("ADMININFO"), "Detecting summon of " + itemCount + " " + itemMaterial.toString() + " by " + player.getName()));
