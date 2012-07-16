@@ -33,7 +33,7 @@ public class ClearInventoryCommand extends MasterCommand {
                 sender.sendMessage(ChatColor.RED + e.getMessage());
                 return;
             }
-            this.plugin.getLogger().info(ChatColor.RED + player.getName() + " emptied inventory of " + target.getName());
+            this.plugin.getLogger().info(ChatColor.RED + sender.getName() + " emptied inventory of " + target.getName());
         }
         if (target != null) {
             final PlayerInventory targetInventory = target.getInventory();
