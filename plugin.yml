@@ -17,6 +17,12 @@ commands:
     usage: /ci
     permission: j2mc.fun.commands
     permission-message: You may not
+  ri:
+    aliases: ['removeitem']
+    description: remove held item from inventory
+    usage: /ci
+    permission: j2mc.fun.commands
+    permission-message: You may not
 permissions:
   j2mc.fun.commands:
     description: Gives access to fun commands.

@@ -12,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import to.joe.j2mc.fun.command.ClearInventoryCommand;
 import to.joe.j2mc.fun.command.ItemCommand;
+import to.joe.j2mc.fun.command.RemoveItemCommand;
 
 public class J2MC_Fun extends JavaPlugin implements Listener {
 
@@ -41,6 +42,7 @@ public class J2MC_Fun extends JavaPlugin implements Listener {
         }
         this.getCommand("ci").setExecutor(new ClearInventoryCommand(this));
         this.getCommand("item").setExecutor(new ItemCommand(this));
+        this.getCommand("ri").setExecutor(new RemoveItemCommand(this));
 
         this.getServer().getPluginManager().registerEvents(new EventListener(this), this);
         this.getLogger().info("Fun module enabled!");
