@@ -88,8 +88,8 @@ public class ItemCommand extends MasterCommand {
             player.sendMessage(ChatColor.YELLOW + "You've been given " + ChatColor.AQUA + itemCount + " " + ChatColor.GOLD + ChatColor.BOLD + type.getName());
             this.plugin.getLogger().info("Giving " + player.getName() + " " + itemCount + " " + itemMaterial.toString());
             if ((this.plugin.summonWatchList.contains(itemMaterial.getId()) && ((itemCount > 10) || (itemCount < 1)) && !isAdmin) && !player.hasPermission("j2mc.fun.trusted")) {
-                this.plugin.getServer().getPluginManager().callEvent(new MessageEvent(MessageEvent.compile("ADMININFO"), "Detecting summon of " + itemCount + " " + itemMaterial.toString() + " by " + player.getName()));
-                J2MC_Manager.getCore().adminAndLog(ChatColor.LIGHT_PURPLE + "Detecting summon of " + ChatColor.WHITE + itemCount + " " + ChatColor.LIGHT_PURPLE + itemMaterial.toString() + " by " + ChatColor.WHITE + player.getName());
+                this.plugin.getServer().getPluginManager().callEvent(new MessageEvent(MessageEvent.compile("ADMININFO"), "Detecting summon of " + itemCount + " " + type.getName() + " by " + player.getName()));
+                J2MC_Manager.getCore().adminAndLog(ChatColor.LIGHT_PURPLE + "Detecting summon of " + ChatColor.WHITE + itemCount + " " + ChatColor.LIGHT_PURPLE + type.getName() + " by " + ChatColor.WHITE + player.getName());
             }
         }
     }
