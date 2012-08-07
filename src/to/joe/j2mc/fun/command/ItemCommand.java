@@ -26,28 +26,58 @@ public class ItemCommand extends MasterCommand {
     @Override
     public void exec(CommandSender sender, String commandName, String[] args, Player player, boolean isPlayer) {
         if (isPlayer) {
+            //Check if player is admin
             final boolean isAdmin = sender.hasPermission("j2mc.fun.admin");
             if (args.length == 0) {
                 player.sendMessage(ChatColor.RED + "Correct usage is: /i [item](:damage) (amount)");
                 return;
             }
+            //Target player for giving items to other players
             final Player targetPlayer = player;
+            //Material to be spawned
             Material itemMaterial = null;
             int itemCount = 1;
             short itemDamage = 0;
+            //Split up the first argument by ":" for material vs damage
             final String[] idDamageSplit = args[0].split(":");
+            //No 0 (air)
             if (idDamageSplit[0].equals("0")) {
                 idDamageSplit[0] = "1";
             }
+            //Look up item in the worldedit item database
             ItemType type = ItemType.lookup(idDamageSplit[0]);
+            //If item isn't found in database
             if (type == null) {
-                player.sendMessage(ChatColor.RED + "Unknown item: '" + args[0] + "'");
-                return;
+                //Try checking if the material is given by ids
+                int id;
+                try {
+                    //Parse argument into id
+                    id = Integer.parseInt(idDamageSplit[0]);
+                } catch (NumberFormatException e) {
+                    //If material is not found and isn't a number return here with unknown item error
+                    player.sendMessage(ChatColor.RED + "Unknown item: '" + args[0] + "'");
+                    return;
+                }
+                //At this point we know that the item is given by id but not by material name
+                //Query the material db by id
+                itemMaterial = Material.getMaterial(id);
+                
+                //Check if id isn't null i.e item was found
+                if (itemMaterial == null) {
+                    player.sendMessage(ChatColor.RED + "Unknown item: '" + args[0] + "'");
+                    return;
+                }
             }
-            itemMaterial = Material.getMaterial(type.getID());
+            //If the material is null already. i.e we didn't find it by id, grab it from the material name query
+            if (itemMaterial == null) { 
+                itemMaterial = Material.getMaterial(type.getID());
+            }
+            //If a damage field was specified
             if (idDamageSplit.length == 2) {
+                //Grab the damage and see if its a wool value
                 final String damageString = idDamageSplit[1];
                 final short value = this.toWoolValue(damageString);
+                //If it isn't a wool value manually insert it by parsing the short
                 if (value != 0) {
                     itemDamage = value;
                 } else {
@@ -59,9 +89,11 @@ public class ItemCommand extends MasterCommand {
                     }
                 }
             }
+            //Truncate damage from range 0-15
             if ((itemDamage < 0) || (itemDamage > 15)) {
                 itemDamage = 0;
             }
+            //Attempt to parse amount
             if (args.length > 1) {
                 final String countString = args[1];
                 try {
@@ -71,6 +103,7 @@ public class ItemCommand extends MasterCommand {
                     return;
                 }
             }
+            //If the player is an admin and a player name was provided in the last argument, give them them the items
             if ((args.length == 3) && isAdmin) {
                 final String targetName = args[2];
                 try {
@@ -80,13 +113,18 @@ public class ItemCommand extends MasterCommand {
                     return;
                 }
             }
+            //Check if the item can't be spawned against the black list
             if (!isAdmin && this.plugin.summonBlackList.contains(itemMaterial.getId())) {
                 player.sendMessage(ChatColor.RED + "Can't give that to you right now");
                 return;
             }
+            //Create the itemstack and add it to the inventory
             targetPlayer.getInventory().addItem(new ItemStack(itemMaterial, itemCount, itemDamage));
+            //Send the player a message regarding the item
             player.sendMessage(ChatColor.YELLOW + "You've been given " + ChatColor.AQUA + itemCount + " " + ChatColor.GOLD + ChatColor.BOLD + type.getName());
+            //Log the spawning
             this.plugin.getLogger().info("Giving " + player.getName() + " " + itemCount + " " + itemMaterial.toString());
+            //If item is on the watch list for summoning send message to irc and admins
             if ((this.plugin.summonWatchList.contains(itemMaterial.getId()) && ((itemCount > 10) || (itemCount < 1)) && !isAdmin) && !player.hasPermission("j2mc.fun.trusted")) {
                 this.plugin.getServer().getPluginManager().callEvent(new MessageEvent(MessageEvent.compile("ADMININFO"), "Detecting summon of " + itemCount + " " + type.getName() + " by " + player.getName()));
                 J2MC_Manager.getCore().adminAndLog(ChatColor.LIGHT_PURPLE + "Detecting summon of " + ChatColor.WHITE + itemCount + " " + ChatColor.LIGHT_PURPLE + type.getName() + " by " + ChatColor.WHITE + player.getName());

@@ -512,7 +512,6 @@ public enum ItemType {
         shouldNotStack.add(ItemID.GOLD_CHEST);
         shouldNotStack.add(ItemID.GOLD_PANTS);
         shouldNotStack.add(ItemID.GOLD_BOOTS);
-        shouldNotStack.add(ItemID.SIGN);
         shouldNotStack.add(ItemID.WOODEN_DOOR_ITEM);
         shouldNotStack.add(ItemID.BUCKET);
         shouldNotStack.add(ItemID.WATER_BUCKET);
