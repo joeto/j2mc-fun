@@ -72,6 +72,10 @@ public class ItemCommand extends MasterCommand {
             if (itemMaterial == null) { 
                 itemMaterial = Material.getMaterial(type.getID());
             }
+            
+            //Set type to itemMaterial to avoid null pointers ;o
+            type = ItemType.fromID(itemMaterial.getId());
+            
             //If a damage field was specified
             if (idDamageSplit.length == 2) {
                 //Grab the damage and see if its a wool value
