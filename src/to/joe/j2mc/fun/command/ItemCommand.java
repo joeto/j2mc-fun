@@ -124,8 +124,8 @@ public class ItemCommand extends MasterCommand {
             }
             //Create the itemstack and add it to the inventory
             targetPlayer.getInventory().addItem(new ItemStack(itemMaterial, itemCount, itemDamage));
-            //Send the player a message regarding the item
-            player.sendMessage(ChatColor.YELLOW + "You've been given " + ChatColor.AQUA + itemCount + " " + ChatColor.GOLD + ChatColor.BOLD + type.getName());
+            //Send the player a message regarding the item lowercasing the first letter since its gonna be capitalized
+            player.sendMessage(ChatColor.YELLOW + "You've been given " + ChatColor.AQUA + itemCount + " " + ChatColor.GOLD + ChatColor.BOLD + type.getName().substring(0, 1).toLowerCase() + type.getName().substring(1));
             //Log the spawning
             this.plugin.getLogger().info("Giving " + player.getName() + " " + itemCount + " " + itemMaterial.toString());
             //If item is on the watch list for summoning send message to irc and admins
