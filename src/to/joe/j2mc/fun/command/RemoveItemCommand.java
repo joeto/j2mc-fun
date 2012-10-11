@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.sk89q.worldedit.blocks.ItemType;
+import com.sk89q.worldedit.j2blocks.ItemType;
 
 import to.joe.j2mc.core.command.MasterCommand;
 import to.joe.j2mc.fun.J2MC_Fun;
