@@ -78,6 +78,7 @@ public final class BlockID {
     public static final int FIRE = 51;
     public static final int MOB_SPAWNER = 52;
     public static final int WOODEN_STAIRS = 53;
+    public static final int OAK_WOOD_STAIRS = 53;
     public static final int CHEST = 54;
     public static final int REDSTONE_WIRE = 55;
     public static final int DIAMOND_ORE = 56;
@@ -162,4 +163,13 @@ public final class BlockID {
     public static final int SPRUCE_WOOD_STAIRS = 134;
     public static final int BIRCH_WOOD_STAIRS = 135;
     public static final int JUNGLE_WOOD_STAIRS = 136;
+    public static final int COMMAND_BLOCK = 137;
+    public static final int BEACON = 138;
+    public static final int COBBLESTONE_WALL = 139;
+    public static final int FLOWER_POT = 140;
+    public static final int CARROTS = 141;
+    public static final int POTATOES = 142;
+    public static final int WOODEN_BUTTON = 143;
+    public static final int HEAD = 144;
+    public static final int ANVIL = 145;
 }
