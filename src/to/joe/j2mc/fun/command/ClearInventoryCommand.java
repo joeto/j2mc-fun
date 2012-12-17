@@ -10,13 +10,10 @@ import to.joe.j2mc.core.command.MasterCommand;
 import to.joe.j2mc.core.exceptions.BadPlayerMatchException;
 import to.joe.j2mc.fun.J2MC_Fun;
 
-public class ClearInventoryCommand extends MasterCommand {
-
-    J2MC_Fun plugin;
+public class ClearInventoryCommand extends MasterCommand<J2MC_Fun> {
 
     public ClearInventoryCommand(J2MC_Fun plugin) {
         super(plugin);
-        this.plugin = plugin;
     }
 
     @Override

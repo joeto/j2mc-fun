@@ -14,13 +14,10 @@ import to.joe.j2mc.core.event.MessageEvent;
 import to.joe.j2mc.core.exceptions.BadPlayerMatchException;
 import to.joe.j2mc.fun.J2MC_Fun;
 
-public class ItemCommand extends MasterCommand {
-
-    J2MC_Fun plugin;
+public class ItemCommand extends MasterCommand<J2MC_Fun> {
 
     public ItemCommand(J2MC_Fun fun) {
         super(fun);
-        this.plugin = fun;
     }
 
     @Override

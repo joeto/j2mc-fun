@@ -10,13 +10,10 @@ import com.sk89q.worldedit.j2blocks.ItemType;
 import to.joe.j2mc.core.command.MasterCommand;
 import to.joe.j2mc.fun.J2MC_Fun;
 
-public class RemoveItemCommand extends MasterCommand {
+public class RemoveItemCommand extends MasterCommand<J2MC_Fun> {
     
-    J2MC_Fun plugin;
-
     public RemoveItemCommand(J2MC_Fun plugin) {
         super(plugin);
-        this.plugin = plugin;
     }
     
     @Override
