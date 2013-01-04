@@ -23,6 +23,11 @@ commands:
     usage: /ci
     permission: j2mc.fun.commands
     permission-message: You may not
+  more:
+    description: Receive more of the item you are holding
+    usage: /more [stacks]
+    permission: j2mc.fun.commands
+    permission-message: You may not
 permissions:
   j2mc.fun.commands:
     description: Gives access to fun commands.
