@@ -1,5 +1,6 @@
 package to.joe.j2mc.fun;
 
+import java.util.HashSet;
 import java.util.List;
 
 import org.bukkit.GameMode;
@@ -21,6 +22,8 @@ public class J2MC_Fun extends JavaPlugin implements Listener {
     public List<Integer> blockedForNormals;
     public List<Integer> summonBlackList;
     public List<Integer> summonWatchList;
+    public HashSet<String> pvpEnabled;
+    public boolean blockDamage, imitateAlpha;
 
     @Override
     public void onDisable() {
@@ -41,6 +44,11 @@ public class J2MC_Fun extends JavaPlugin implements Listener {
                 this.setFlight(player);
             }
         }
+        this.blockDamage = this.getConfig().getBoolean("damage.blockDamage", false);
+        this.imitateAlpha = this.getConfig().getBoolean("damage.imitateAlpha", false);
+
+        this.pvpEnabled = new HashSet<String>();
+
         this.getCommand("ci").setExecutor(new ClearInventoryCommand(this));
         this.getCommand("item").setExecutor(new ItemCommand(this));
         this.getCommand("ri").setExecutor(new RemoveItemCommand(this));
@@ -54,11 +62,10 @@ public class J2MC_Fun extends JavaPlugin implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         this.setFlight(event.getPlayer());
     }
-    
-    
+
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
-    	this.setFlight(event.getPlayer());
+        this.setFlight(event.getPlayer());
     }
 
     public void setFlight(Player player) {
