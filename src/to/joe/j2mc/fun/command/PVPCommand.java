@@ -11,8 +11,8 @@ import to.joe.j2mc.core.exceptions.BadPlayerMatchException;
 import to.joe.j2mc.fun.J2MC_Fun;
 
 public class PVPCommand extends MasterCommand<J2MC_Fun> {
-    private final String prefix = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "PvP" + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
-    private final String listMsg = this.prefix + "There are currently " + ChatColor.BOLD + "%s" + ChatColor.RESET + " users with PvP enabled.";
+    private static final String PREFIX = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "PvP" + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
+    private static final String LIST_MSG = PVPCommand.PREFIX + "There are currently " + ChatColor.BOLD + "%s" + ChatColor.RESET + " users with PvP enabled.";
 
     public PVPCommand(J2MC_Fun plugin) {
         super(plugin);
@@ -30,17 +30,17 @@ public class PVPCommand extends MasterCommand<J2MC_Fun> {
                 sb.append(user).append(", ");
             }
             if (sb.length() == 0) {
-                sender.sendMessage(String.format(this.listMsg, "0"));
+                sender.sendMessage(String.format(PVPCommand.LIST_MSG, "0"));
             } else {
                 sb.setLength(sb.length() - 2);
-                sender.sendMessage(String.format(this.listMsg, this.plugin.pvpEnabled.size()));
-                sender.sendMessage(this.prefix + sb.toString());
+                sender.sendMessage(String.format(PVPCommand.LIST_MSG, this.plugin.pvpEnabled.size()));
+                sender.sendMessage(PVPCommand.PREFIX + sb.toString());
             }
         } else {
             try {
                 final Player target = J2MC_Manager.getVisibility().getPlayer(args[0], sender);
                 final String name = target.getName();
-                String message = this.prefix + sender.getName() + " ";
+                String message = PVPCommand.PREFIX + sender.getName() + " ";
                 if (this.plugin.pvpEnabled.contains(name)) {
                     this.plugin.pvpEnabled.remove(name);
                     message += "disables PvP for " + name;
@@ -51,7 +51,7 @@ public class PVPCommand extends MasterCommand<J2MC_Fun> {
                 J2MC_Manager.getCore().adminAndLog(message);
                 this.plugin.getServer().getPluginManager().callEvent(new MessageEvent(MessageEvent.compile("ADMININFO"), message));
             } catch (final BadPlayerMatchException e) {
-                sender.sendMessage(this.prefix + e.getMessage());
+                sender.sendMessage(PVPCommand.PREFIX + e.getMessage());
             }
         }
     }
